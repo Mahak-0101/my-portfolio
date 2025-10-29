@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mahak Saxena — Founder & Developer | MahakTech</title>
+  <!-- ===== INTERNAL STYLES ===== -->
+  <style>
+    /* ---------- Theme variables ---------- */
+    :root{
+      --bg:#060714;
+      --card:#0d1117;
+      --muted:#98a0b3;
+      --accent1:#00d0ff; /* cyan */
+      --accent2:#7c4dff; /* violet */
+      --glass: rgba(255,255,255,0.04);
+      --radius:16px;
+      --glass-border: rgba(0,208,255,0.08);
+      --max-width:1150px;
+
+      --glow: 0 10px 40px rgba(124,77,255,0.06), 0 6px 24px rgba(0,208,255,0.03);
+      --card-elev: 0 18px 60px rgba(2,6,23,0.55);
+
+      --ease-soft: cubic-bezier(.16,.84,.24,1);
+      --ease-fine: cubic-bezier(.2,.9,.2,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:
+        radial-gradient(1200px 500px at 10% 10%, rgba(124,77,255,0.03), transparent),
+        radial-gradient(1200px 500px at 90% 90%, rgba(0,208,255,0.02), transparent),
+        linear-gradient(180deg,#030412,#071026);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding-bottom:80px;
+      overflow-x:hidden;
+      position:relative;
+      background-attachment:fixed;
+    }
+
+    /* Animated background blob layers */
+    .bg-blob{position:fixed;pointer-events:none;z-index:0;filter:blur(78px);opacity:0.24;mix-blend-mode:screen;transition:transform 1.2s var(--ease-soft)}
+    .bg-blob.b1{width:600px;height:600px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));left:-160px;top:-120px;animation:blobMove 18s infinite alternate}
+    .bg-blob.b2{width:460px;height:460px;border-radius:50%;background:linear-gradient(135deg,rgba(0,208,255,0.06),rgba(124,77,255,0.06));right:-140px;bottom:-100px;animation:blobMove 22s infinite alternate-reverse}
+
+    @keyframes blobMove { to { transform: translateY(46px) translateX(36px) scale(1.06) } }
+
+    a{color:inherit}
+    img{max-width:100%;display:block}
+
+    /* ---------- Layout ---------- */
+    .container{
+      width:min(var(--max-width),94%);
+      margin:0 auto;
+      position:relative;
+      z-index:20;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    nav{
+      position:fixed;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:calc(100% - 4%);
+      max-width:1200px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.018), rgba(255,255,255,0.008));
+      border:1px solid rgba(255,255,255,0.02);
+      border-radius:28px;
+      padding:12px 18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      backdrop-filter: blur(10px) saturate(1.05);
+      z-index:60;
+      transition:transform .38s var(--ease-soft), box-shadow .38s var(--ease-soft), background .4s;
+    }
+    nav.float { transform:translateX(-50%) translateY(-6px); box-shadow:var(--glow); }
+
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:48px;height:48px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#021;
+      box-shadow:0 14px 40px rgba(0,208,255,0.05);
+      font-family: 'Poppins', sans-serif;
+      letter-spacing:0.6px;
+      transform-origin:center;
+      transition:transform .24s var(--ease-soft), box-shadow .24s var(--ease-soft);
+    }
+    .logo:active{transform:scale(.98)}
+    .brand h1{font-size:15px;margin:0;letter-spacing:0.2px}
+    .brand small{display:block;color:var(--muted);font-size:11px}
+
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{font-weight:600;color:#cfe9ff;opacity:0.95;text-decoration:none;padding:8px 12px;border-radius:10px;transition:all .28s var(--ease-soft)}
+    .navlinks a:hover{background:linear-gradient(90deg, rgba(0,208,255,0.05), rgba(124,77,255,0.04));transform:translateY(-3px)}
+    .cta{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021;padding:8px 14px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,208,255,0.06);}
+
+    /* ---------- HERO ---------- */
+    .hero{
+      min-height:78vh;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:40px;
+      align-items:center;
+      padding:130px 0 40px;
+    }
+    .hero-left{padding:10px 0; z-index:5}
+    .kicker{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.006));
+      border-radius:999px;
+      padding:10px 14px;
+      color:var(--muted);
+      font-weight:700;
+      width:max-content;
+      border:1px solid rgba(255,255,255,0.02);
+      backdrop-filter: blur(6px);
+      transform:translateY(0);
+      transition:transform .6s var(--ease-soft);
+    }
+
+    .title{
+      margin-top:18px;
+      font-size:56px;
+      line-height:1.02;
+      font-weight:900;
+      letter-spacing:-0.6px;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-size:200% 200%;
+      animation:gradShift 10s linear infinite;
+      text-shadow: 0 8px 50px rgba(0,208,255,0.03);
+    }
+    @keyframes gradShift{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    .subtitle{
+      margin-top:14px;color:var(--muted);font-size:16px;max-width:720px;
+      opacity:0.95;
+    }
+    .hero-ctas{margin-top:24px;display:flex;gap:12px;align-items:center}
+    .btn-outline{ padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:transparent;color: #cfe9ff;font-weight:700;cursor:pointer;box-shadow:none;transition:transform .28s var(--ease-soft), box-shadow .28s var(--ease-soft) }
+    .btn-outline:hover{ transform:translateY(-4px); box-shadow:0 10px 40px rgba(2,6,23,0.4) }
+
+    .btn-primary{
+      padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#021;font-weight:800;cursor:pointer;box-shadow:0 18px 50px rgba(0,208,255,0.06);transform-origin:center;transition:transform .16s var(--ease-soft);
+    }
+    .btn-primary:active{transform:scale(.985)}
+
+    /* hero right card (Neon Glass Photo) */
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006));
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.02);
+      padding:18px;
+      position:relative;
+      backdrop-filter: blur(12px) saturate(1.05);
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      justify-content:flex-start;
+      align-items:stretch;
+      transform-style:preserve-3d;
+      perspective:1200px;
+      transition:transform .36s var(--ease-soft), box-shadow .36s var(--ease-soft);
+    }
+    .photo-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:14px;
+      padding:8px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    /* Neon glass circle / glow frame */
+    .photo-glass{
+      width:320px;
+      height:260px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      position:relative;
+      background: linear-gradient(180deg,#08111a,#061018);
+      box-shadow: 0 8px 40px rgba(0,168,255,0.04), inset 0 1px 8px rgba(255,255,255,0.02);
+      border: 1px solid rgba(0,208,255,0.06);
+      transition: transform .28s var(--ease-soft), box-shadow .28s var(--ease-soft);
+      transform-style:preserve-3d;
+    }
+    .photo-glass img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform-origin:center;
+      will-change:transform;
+      transition:transform .45s var(--ease-soft);
+    }
+    .photo-placeholder{ color:var(--muted); font-weight:700; font-size:14px; text-align:center; padding:20px; }
+
+    .neon-border{
+      position:absolute;
+      inset:6px;
+      border-radius:10px;
+      pointer-events:none;
+      background: linear-gradient(90deg, rgba(0,208,255,0.06), rgba(124,77,255,0.04));
+      filter: blur(10px);
+      mix-blend-mode:screen;
+      opacity:0.9;
+      transition:opacity .22s var(--ease-soft), filter .22s var(--ease-soft);
+      box-shadow: 0 6px 28px rgba(124,77,255,0.04);
+    }
+
+    .quick{ display:flex; gap:12px; justify-content:space-between; margin-top:6px; }
+    .stat{ background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); padding:12px; border-radius:12px; flex:1; border:1px solid rgba(255,255,255,0.02); transition:transform .28s var(--ease-soft), box-shadow .28s var(--ease-soft) }
+    .stat:hover{ transform:translateY(-6px); box-shadow:var(--card-elev) }
+    .stat h4{margin:0;color:var(--accent1)}
+    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    /* ---------- ABOUT / FEATURES ---------- */
+    .section{ margin-top:50px; padding:40px 0 0; display:grid; grid-template-columns: 1fr 420px; gap:32px; align-items:start; }
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006)); border:1px solid rgba(255,255,255,0.02); padding:22px; border-radius:12px; backdrop-filter: blur(8px); box-shadow: 0 12px 30px rgba(2,6,23,0.32); }
+    .about p{color:var(--muted);line-height:1.6}
+    .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+    .skill-pill{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);font-weight:700;color:#dff7ff;transition:transform .18s var(--ease-soft)}
+    .skill-pill:hover{transform:translateY(-6px);box-shadow:var(--card-elev)}
+
+    /* ---------- PROJECTS ---------- */
+    .projects{ margin-top:40px; }
+    .projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+    .project{ position:relative; overflow:hidden; border-radius:14px; padding:0; background: linear-gradient(180deg, rgba(0,0,0,0.16), rgba(255,255,255,0.008)); border:1px solid rgba(255,255,255,0.02); transition: all .36s var(--ease-soft); transform-style:preserve-3d; perspective:800px; }
+    .project:hover{ transform:translateY(-8px) rotateX(1.4deg); box-shadow:var(--card-elev) }
+    .project-thumb{ height:150px; background:linear-gradient(135deg, rgba(0,208,255,0.08), rgba(124,77,255,0.06)); display:flex; align-items:center; justify-content:center; color: rgba(255,255,255,0.95); font-weight:800; font-size:16px; transition:transform .36s var(--ease-soft), filter .36s var(--ease-soft); background-size:200% 200%; }
+    .project:hover .project-thumb{ transform:scale(1.03) filter:brightness(1.04); }
+    .project-body{ padding:14px; }
+    .project h3{ margin:0;color:var(--accent2) }
+    .project p{ margin:10px 0;color:var(--muted);font-size:14px }
+    .techs{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; padding-bottom:14px; }
+    .badge{ font-size:12px; padding:6px 8px; border-radius:10px; background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); color:#cfe9ff; border:1px solid rgba(255,255,255,0.02); transition:transform .28s var(--ease-soft) }
+
+    /* action row */
+    .project-actions{ display:flex; gap:10px; padding:12px; border-top:1px solid rgba(255,255,255,0.02); background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02)); }
+    .link-btn{ border:0; background:transparent; color:var(--accent1); font-weight:800; cursor:pointer; padding:8px; border-radius:8px; transition:transform .14s var(--ease-soft) }
+    .link-btn:hover{ transform:translateY(-3px); text-decoration:none; }
+
+    /* ---------- CONTACT ---------- */
+    .contact{ margin-top:40px; border-radius:14px; padding:20px; display:flex; gap:20px; align-items:center; }
+    .contact .left{ flex:1 }
+    .contact .right{ width:320px }
+    .contact .small{ color:var(--muted); font-size:13px }
+
+    /* ---------- FOOTER ---------- */
+    footer{ margin-top:50px; padding:40px 0; color:var(--muted); text-align:center; border-top:1px solid rgba(255,255,255,0.02) }
+
+    /* ---------- MODAL (project detail & resume) ---------- */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:linear-gradient(0deg, rgba(2,6,23,0.82), rgba(2,6,23,0.94)); z-index:300; }
+    .modal.show{ display:flex }
+    .modal-card{ width:min(920px,94%); max-height:84vh; overflow:auto; border-radius:14px; padding:22px; background:linear-gradient(180deg,#07101a,#0c141b); border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 90px rgba(2,6,23,0.8); transform-origin:center; transition: transform .36s var(--ease-soft), opacity .28s; opacity:0; transform: translateY(18px) scale(.99) rotateX(1.2deg); }
+    .modal.show .modal-card{ opacity:1; transform: translateY(0) scale(1) rotateX(0deg); animation: modalGlow 1.8s var(--ease-soft); }
+    .modal-card h2{ margin-top:0 }
+    .modal .close{ position:absolute; top:22px; right:24px; color:var(--muted); padding:8px 12px; border-radius:10px; background:rgba(255,255,255,0.02); cursor:pointer; transition:transform .18s var(--ease-soft) }
+    .modal .close:hover{ transform:translateY(-4px) }
+
+    @keyframes modalGlow { 0%{ box-shadow:0 8px 30px rgba(0,0,0,0.4) } 50%{ box-shadow:0 40px 140px rgba(124,77,255,0.06) } 100%{ box-shadow:0 40px 90px rgba(2,6,23,0.8) } }
+
+    /* Resume viewer inside modal */
+    .resume-frame{ width:100%; height:70vh; border-radius:8px; border:1px solid rgba(255,255,255,0.03); overflow:hidden }
+
+    /* Entrance animation helper */
+    .enter{ transform:translateY(14px); opacity:0; transition:all .9s var(--ease-soft) }
+    .enter.visible{ transform:translateY(0); opacity:1; }
+
+    /* gentle float used by multiple elements */
+    @keyframes floatSlow {
+      0% { transform: translateY(0) }
+      50% { transform: translateY(-6px) }
+      100% { transform: translateY(0) }
+    }
+
+    /* logo rotating ring */
+    .logo {
+      position:relative;
+      overflow:visible;
+      border-radius:12px;
+    }
+    .logo::after{
+      content:'';
+      position:absolute;
+      inset:-10px -14px -12px -14px;
+      border-radius:12px;
+      background: conic-gradient(from 120deg, rgba(0,208,255,0.06), rgba(124,77,255,0.06), rgba(0,208,255,0.04));
+      filter:blur(14px) saturate(1.05);
+      opacity:0.85;
+      transform: rotate(0deg) scale(.98);
+      animation: ringRotate 10s linear infinite;
+      pointer-events:none;
+      z-index:-1;
+    }
+    @keyframes ringRotate { to { transform: rotate(360deg) scale(.98) } }
+
+    /* subtle shimmer for kicker */
+    .kicker{
+      position:relative;
+      overflow:hidden;
+    }
+    .kicker::after{
+      content:'';
+      position:absolute;
+      left:-70%;
+      top:0;
+      width:36%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+      transform:skewX(-18deg);
+      animation: shimmer 6s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes shimmer { to { left:120% } }
+
+    /* project thumb animated gradient + scanline sheen */
+    .project-thumb{
+      position:relative;
+      overflow:hidden;
+      background-size:220% 220%;
+      animation: thumbGradient 12s ease-in-out infinite;
+    }
+    @keyframes thumbGradient {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .project-thumb::before{
+      content:'';
+      position:absolute;
+      left:-50%;
+      top:0;
+      height:100%;
+      width:60%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.16), rgba(255,255,255,0.02));
+      transform: skewX(-20deg);
+      filter:blur(10px);
+      opacity:0.9;
+      transition: all .9s var(--ease-soft);
+    }
+    .project:hover .project-thumb::before{
+      left:120%;
+      transition-duration:.9s;
+    }
+
+    /* floating badges */
+    .badge{
+      animation: bob 3.6s ease-in-out infinite;
+    }
+    .badge:nth-child(odd){ animation-delay: 120ms }
+    .badge:nth-child(even){ animation-delay: 280ms }
+    @keyframes bob { 0%{ transform: translateY(0) } 50%{ transform: translateY(-6px) } 100%{ transform: translateY(0) } }
+
+    /* neon-border subtle pulse */
+    .neon-border{ animation: neonPulse 5.2s ease-in-out infinite; }
+    @keyframes neonPulse { 0%{ opacity:0.9; filter: blur(10px) } 50%{ opacity:0.6; filter: blur(14px) } 100%{ opacity:0.9; filter: blur(10px) } }
+
+    /* modal pop-in with slight rotate */
+    /* subtle scanlines over entire page for retro-futuristic feel */
+    body::before{
+      content:'';
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      background-image: linear-gradient(rgba(255,255,255,0.0018) 1px, transparent 1px);
+      background-size: 100% 28px;
+      opacity:0.6;
+      mix-blend-mode:overlay;
+      transform: translateZ(0);
+    }
+
+    /* animated underline for nav links */
+    .navlinks a{ position:relative; overflow:visible }
+    .navlinks a::after{
+      content:'';
+      position:absolute;
+      left:12px;
+      right:12px;
+      height:2px;
+      bottom:6px;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      transform: scaleX(0);
+      transform-origin:left center;
+      transition: transform .36s var(--ease-soft);
+      opacity:0.95;
+      border-radius:2px;
+    }
+    .navlinks a:hover::after{ transform: scaleX(1) }
+
+    /* entry stagger enhancement using css variables */
+    .enter{ --d: 0ms; transition-delay: var(--d) }
+    .enter.visible{ transition-delay: var(--d) }
+
+    /* quick sparkle element (created by JS) */
+    .spark {
+      position:fixed;
+      width:12px;
+      height:12px;
+      border-radius:50%;
+      pointer-events:none;
+      transform: translate(-50%,-50%) scale(0.6);
+      filter: blur(0.4px);
+      opacity:0;
+      animation: sparkPop 900ms var(--ease-soft);
+      mix-blend-mode:screen;
+    }
+    @keyframes sparkPop {
+      0% { opacity:1; transform: translate(-50%,-50%) scale(0.2) }
+      60% { opacity:1; transform: translate(-50%,-50%) scale(1.18) }
+      100% { opacity:0; transform: translate(-50%,-50%) scale(1.6) translateY(-18px) }
+    }
+
+    /* focus styles for keyboard users */
+    :focus-visible{ outline: 3px solid rgba(0,208,255,0.12); outline-offset:4px; border-radius:8px }
+
+    /* small devices tweak for shimmer and floats */
+    @media(max-width:520px){
+      .logo::after{ display:none }
+      .project-thumb::before{ display:none }
+      .badge{ animation:none }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:980px){
+      .hero, .section{ grid-template-columns:1fr }
+      .hero-card{ order:-1 }
+      nav{ padding:10px }
+      .container{ padding:0 14px }
+      .title{ font-size:36px }
+      .photo-glass{ width:100%; height:220px }
+    }
+    @media(max-width:520px){
+      .title{ font-size:28px }
+      .brand h1{ font-size:14px }
+      .photo-glass{ height:180px }
+      .hero{ padding:80px 14px 30px }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .bg-blob, .logo::after, .kicker::after, .project-thumb, .project-thumb::before,
+      .badge, .neon-border, .project, .photo-glass, .enter, .modal-card, .spark {
+        animation: none !important;
+        transition: none !important;
+      }
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- decorative animated blobs -->
+  <div class="bg-blob b1" aria-hidden></div>
+  <div class="bg-blob b2" aria-hidden></div>
+
+  <!-- NAV -->
+  <nav class="container" role="navigation" aria-label="Main navigation" id="mainNav">
+    <div class="brand">
+      <div class="logo" aria-hidden>MT</div>
+      <div>
+        <h1>MahakTech</h1>
+        <small>Mahak Saxena — Founder & CEO</small>
+      </div>
+    </div>
+
+    <div class="navlinks" aria-hidden>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+      <a href="#" class="cta" id="download-resume">Resume</a>
+    </div>
+  </nav>
+
+  <main class="container" role="main">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-left enter">
+        <div class="kicker">Founder • Developer • Innovator</div>
+        <h2 class="title">Mahak Saxena</h2>
+        <div class="subtitle">
+          Founder & CEO of MahakTech. Python developer • Android • IoT & Embedded Systems • Full-Stack Web.
+          Building practical technology with discipline, tradition and purpose — delivered 55+ hands-on projects.
+        </div>
+
+        <div class="hero-ctas">
+          <button class="btn-primary" id="hireBtn">Hire / Work With Me</button>
+          <button class="btn-outline" id="viewProjects">View Projects</button>
+        </div>
+
+        <div style="margin-top:18px;color:var(--muted);font-size:13px">
+          Based in Indore, India • Open to freelance & collaborations
+        </div>
+      </div>
+
+      <aside class="hero-card enter" aria-hidden>
+        <div class="photo-wrap">
+          <div class="photo-glass" id="photoGlass" aria-hidden>
+            <!-- Use mahak.png if present (lazy load) -->
+            <img id="heroPhoto" src="mahak.png" alt="Mahak Saxena" loading="lazy" decoding="async" onerror="this.style.display='none'">
+            <div class="photo-placeholder" id="photoFallback" aria-hidden>
+              <!-- SVG neon avatar -->
+              <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <rect x="0" y="0" width="120" height="120" rx="12" fill="#08121a"/>
+                <g transform="translate(10,10)">
+                  <circle cx="50" cy="28" r="22" fill="url(#g)"/>
+                  <rect x="10" y="60" width="80" height="36" rx="10" fill="#061018"/>
+                </g>
+                <defs>
+                  <linearGradient id="g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#00d0ff"/>
+                    <stop offset="1" stop-color="#7c4dff"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div style="margin-top:8px;font-size:13px;color:var(--muted)">Upload mahak.png to replace</div>
+            </div>
+            <div class="neon-border" aria-hidden></div>
+          </div>
+        </div>
+
+        <div class="quick">
+          <div class="stat">
+            <h4>55+</h4>
+            <p>Projects completed (Web, IoT, Software).</p>
+          </div>
+
+          <div class="stat">
+            <h4>Founder</h4>
+            <p>MahakTech — built from scratch in 2023, delivering real solutions.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT & SKILLS -->
+    <section class="section enter" id="about">
+      <div>
+        <div class="card about">
+          <h3>About Me</h3>
+          <p>
+            I am a disciplined learner rooted in family values — I started MahakTech with limited resources and built it by delivering websites,
+            IoT systems and software to students and small businesses. I focus on solving real problems: energy savings, assistive tech, education tools,
+            and practical automation.
+          </p>
+
+          <div style="margin-top:18px">
+            <strong>Education & Experience</strong>
+            <ul style="color:var(--muted);margin-top:8px">
+              <li>B.Tech (IoT + CS) — Patel Science & Technology Institute (2025 — Present)</li>
+              <li>Diploma in Computer Science & Engineering — Government Women's Polytechnic, Indore (CGPA 8.13)</li>
+              <li>Founder & CEO — MahakTech (2023 — Present)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>Core Skills</h3>
+          <div class="skills-grid" style="margin-top:12px">
+            <div class="skill-pill">Python • ML</div>
+            <div class="skill-pill">Web: HTML/CSS/JS • React</div>
+            <div class="skill-pill">Android • Java/Kotlin</div>
+            <div class="skill-pill">IoT • ESP32 • Sensors</div>
+            <div class="skill-pill">C / C++</div>
+            <div class="skill-pill">APIs • DB • Deployment</div>
+            <div class="skill-pill">UI/UX Basics • Figma</div>
+            <div class="skill-pill">Leadership • Mentorship</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Quick contact / CTA -->
+      <aside>
+        <div class="card">
+          <h3>MahakTech</h3>
+          <p style="color:var(--muted);margin-top:8px">MahakTech provides websites, IoT solutions and software for students, small businesses and social-impact initiatives. We value integrity, hard work and long-term value.</p>
+
+          <div style="margin-top:14px">
+            <strong>Services</strong>
+            <ul style="color:var(--muted);margin-top:8px">
+              <li>Websites & Landing Pages</li>
+              <li>Android Apps & Backend</li>
+              <li>IoT Systems & Embedded Development</li>
+              <li>AI/ML Prototypes & Automation</li>
+              <li>Maintenance & Mentorship</li>
+            </ul>
+          </div>
+
+          <div style="margin-top:14px">
+            <a href="#" class="btn-outline" id="quoteBtn">Get a Free Quote</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="projects enter">
+      <h3 style="color:var(--accent1);margin-bottom:14px">Selected Projects</h3>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project">
+          <div class="project-thumb">Smart Home</div>
+          <div class="project-body">
+            <h3>Smart Home Automation System</h3>
+            <p>IoT home automation using ESP32, mobile app control, real-time sensor monitoring and voice integration (Alexa / Google Assistant).</p>
+            <div class="techs">
+              <span class="badge">ESP32</span><span class="badge">Firebase</span><span class="badge">Android</span><span class="badge">MQTT</span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="link-btn view-case" data-id="p1">View Case</button>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project">
+          <div class="project-thumb">Portfolio SaaS</div>
+          <div class="project-body">
+            <h3>Student Portfolio Platform</h3>
+            <p>A platform that generates professional portfolio websites for students to improve internship prospects.</p>
+            <div class="techs">
+              <span class="badge">React</span><span class="badge">Node.js</span><span class="badge">Static Hosting</span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="link-btn view-case" data-id="p2">View Case</button>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project">
+          <div class="project-thumb">Assistive IoT</div>
+          <div class="project-body">
+            <h3>Assistive IoT Device</h3>
+            <p>Low-cost assistive device that sends alerts to family members via mobile — affordability first.</p>
+            <div class="techs">
+              <span class="badge">Arduino</span><span class="badge">Python</span><span class="badge">Mobile Alerts</span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="link-btn view-case" data-id="p3">View Case</button>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project">
+          <div class="project-thumb">Project Tool</div>
+          <div class="project-body">
+            <h3>Project Management Tool (Student)</h3>
+            <p>Light project tracker for student teams — tasks, deadlines and collaboration features.</p>
+            <div class="techs">
+              <span class="badge">Django</span><span class="badge">SQLite</span><span class="badge">Bootstrap</span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="link-btn view-case" data-id="p4">View Case</button>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project">
+          <div class="project-thumb">Business Sites</div>
+          <div class="project-body">
+            <h3>Business Website Solutions</h3>
+            <p>Custom websites for local businesses — branding, SEO and maintenance packages.</p>
+            <div class="techs">
+              <span class="badge">HTML/CSS</span><span class="badge">PHP</span><span class="badge">SEO</span>
+            </div>
+          </div>
+          <div class="project-actions">
+            <button class="link-btn view-case" data-id="p5">View Case</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" style="grid-template-columns:1fr; padding-top:30px">
+      <div class="card contact">
+        <div class="left">
+          <h3>Contact</h3>
+          <p class="small">I respond quickly. For client work, please share a short brief and timeline.</p>
+
+          <div style="margin-top:12px">
+            <div style="font-weight:700">Phone</div>
+            <div class="contact-line"><a href="tel:+919753421067">+91 97534 21067</a></div>
+            <div style="font-weight:700;margin-top:8px">Email</div>
+            <div class="contact-line"><a href="mailto:saxenamahak612@gmail.com">saxenamahak612@gmail.com</a></div>
+            <div style="margin-top:10px;color:var(--muted);font-size:13px">Location: Indore, India</div>
+          </div>
+        </div>
+
+        <div class="right">
+          <div style="font-weight:700">Quick Message</div>
+          <form id="contactForm" style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <input required id="name" placeholder="Your name" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit">
+            <input required id="email" placeholder="Email" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit">
+            <textarea required id="message" placeholder="Short brief / message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
+          <div class="small" style="margin-top:10px">Or message on WhatsApp: <a href="https://wa.me/919753421067" target="_blank">Chat now</a></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© 2025 MahakTech • Mahak Saxena — Built with discipline, respect and modern tech.</div>
+    </footer>
+  </main>
+
+  <!-- ===== MODAL (project detail & resume) ===== -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card" aria-describedby="modalBody">
+      <div class="close" id="modalClose" role="button" tabindex="0">Close ✕</div>
+      <h2 id="modalTitle">Project</h2>
+      <p id="modalBody" style="color:var(--muted)"></p>
+      <div id="modalTech" style="margin-top:12px"></div>
+      <div id="modalFoot" style="margin-top:16px"></div>
+    </div>
+  </div>
+
+  <!-- ===== INTERNAL SCRIPTS ===== -->
+  <script>
+    // Helpers
+    const $ = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // Tiny utilities and interactions for enhanced UI
+    (function(){
+      // Smooth scroll to projects (keeps spark)
+      $('#viewProjects').addEventListener('click', e=>{
+        e.preventDefault();
+        document.getElementById('projects').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+
+      // Hire button scrolls to contact and pulses the form briefly
+      $('#hireBtn').addEventListener('click', ()=>{
+        document.getElementById('contact').scrollIntoView({behavior:'smooth', block:'start'});
+        setTimeout(()=> {
+          const name = document.getElementById('name');
+          name.focus();
+          try {
+            name.animate([{ boxShadow: '0 0 0 rgba(0,0,0,0)' }, { boxShadow: '0 10px 34px rgba(0,208,255,0.08)' }], { duration:850, easing:'ease-out' });
+          } catch(e){}
+        }, 420);
+      });
+
+      // Keep original contact handler (mailto)
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = $('#name').value.trim();
+        const email = $('#email').value.trim();
+        const message = $('#message').value.trim();
+        if(!name||!email||!message){ alert('Please fill all fields'); return; }
+        const subject = encodeURIComponent('Portfolio inquiry from ' + name);
+        const body = encodeURIComponent('Name: ' + name + "\\nEmail: " + email + "\\n\\nMessage:\\n" + message);
+        window.location.href = 'mailto:saxenamahak612@gmail.com?subject=' + subject + '&body=' + body;
+      });
+
+      // Projects data store (used by modal view) — same symbol: PROJECTS
+      const PROJECTS = {
+        p1: { title:'Smart Home Automation System', body:'Built an IoT home automation system that controls lights, fans and sensors through a mobile app. Uses ESP32, MQTT and Firebase. Includes voice integration and energy monitoring.', tech:['ESP32','MQTT','Firebase','Android'], gh:'https://github.com/mahak' },
+        p2: { title:'Student Portfolio Platform', body:'A platform that generates professional portfolio websites for students.', tech:['React','Node.js','Static Hosting'], gh:'https://github.com/mahak' },
+        p3: { title:'Assistive IoT Device', body:'Low-cost assistive device sending alerts to family members.', tech:['Arduino','Python','Mobile Alerts'], gh:'https://github.com/mahak' },
+        p4: { title:'Project Management Tool (Student)', body:'Light project tracker for student teams.', tech:['Django','SQLite','Bootstrap'], gh:'https://github.com/mahak' },
+        p5: { title:'Business Website Solutions', body:'Custom websites for local businesses — branding, SEO and maintenance.', tech:['HTML/CSS','PHP','SEO'], gh:'https://github.com/mahak' }
+      };
+      // Expose PROJECTS for debugging
+      window.PROJECTS = PROJECTS;
+
+      // Attach modal view handlers for "View Case" buttons
+      $$('.view-case').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const id = btn.getAttribute('data-id');
+          const data = PROJECTS[id];
+          if(!data) return;
+          $('#modalTitle').textContent = data.title;
+          $('#modalBody').textContent = data.body;
+          const techNode = $('#modalTech');
+          techNode.innerHTML = '';
+          data.tech.forEach(t=>{
+            const span = document.createElement('span');
+            span.textContent = t;
+            span.style.display='inline-block';
+            span.style.padding='6px 10px';
+            span.style.marginRight='8px';
+            span.style.marginTop='10px';
+            span.style.borderRadius='8px';
+            span.style.background='linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))';
+            span.style.color='#cfe9ff';
+            span.style.fontSize='13px';
+            techNode.appendChild(span);
+          });
+          $('#modalFoot').innerHTML = '<div style="margin-top:12px"><a href="'+data.gh+'" target="_blank" style="color:var(--accent1);font-weight:700">View repo / demo</a></div>';
+          $('#modal').classList.add('show');
+          // move focus for accessibility
+          setTimeout(()=> $('#modalClose').focus(), 150);
+        });
+      });
+
+      // Modal close
+      const closeModal = ()=> {
+        $('#modal').classList.remove('show');
+        // return focus to main content
+        document.activeElement && document.activeElement.blur();
+      };
+      $('#modalClose').addEventListener('click', closeModal);
+      $('#modalClose').addEventListener('keydown', (e)=> { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeModal(); } });
+      $('#modal').addEventListener('click', (e)=> { if(e.target === $('#modal')) closeModal(); });
+
+      // close modal on ESC
+      document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
+
+      // Resume modal
+      document.getElementById('download-resume').addEventListener('click', function(e){
+        e.preventDefault();
+        const resumePath = './Mahak-Saxena.pdf';
+        $('#modalTitle').textContent = 'Mahak Saxena — Resume';
+        $('#modalBody').innerHTML = '<div style="color:var(--muted);margin-bottom:12px">Preview (if the PDF is in the same folder, it will display here). Use the download link below to save.</div>';
+        $('#modalTech').innerHTML = '<div style="margin-top:8px"><a href="'+resumePath+'" download style="color:var(--accent1);font-weight:700">Download Resume (PDF)</a></div>';
+        const iframeWrapper = document.createElement('div');
+        iframeWrapper.className = 'resume-frame';
+        // avoid loading iframe until modal is shown for perf
+        iframeWrapper.innerHTML = '<iframe src="'+resumePath+'" style="width:100%;height:100%;border:0;" title="Resume"></iframe>';
+        $('#modalBody').appendChild(iframeWrapper);
+        $('#modalFoot').innerHTML = '';
+        $('#modal').classList.add('show');
+        setTimeout(()=> $('#modalClose').focus(), 150);
+      });
+
+      // Intersection observer for entrance animations (stagger)
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach((ent, i)=>{
+          if(ent.isIntersecting){
+            ent.target.classList.add('visible');
+            setTimeout(()=> observer.unobserve(ent.target), 600);
+          }
+        });
+      }, {threshold:0.12});
+      $$('.enter').forEach((el, i)=> { el.style.transitionDelay = (i*80)+'ms'; observer.observe(el); });
+
+      // Navbar small float on scroll with subtle blob parallax
+      let lastY = window.scrollY;
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('mainNav');
+        if(window.scrollY > 40) nav.classList.add('float'); else nav.classList.remove('float');
+        // parallax blobs
+        document.querySelectorAll('.bg-blob').forEach((b,i)=>{
+          const depth = (i===0)? 12 : -8;
+          b.style.transform = `translateY(${Math.min(120, window.scrollY/depth)}px)`;
+        });
+        lastY = window.scrollY;
+      });
+
+      // Hero photo tilt (mouse parallax) — throttled with rAF and softened
+      const photoGlass = document.getElementById('photoGlass');
+      if(photoGlass){
+        let raf = null;
+        const tiltConfig = { rxRange: 8, ryRange: 11 }; // softer tilt
+        photoGlass.addEventListener('mousemove', e=>{
+          const rect = photoGlass.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          if(raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(()=>{
+            const rx = (y - 0.5) * tiltConfig.rxRange;
+            const ry = (x - 0.5) * -tiltConfig.ryRange;
+            photoGlass.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+            photoGlass.style.boxShadow = '0 22px 68px rgba(0,208,255,0.06)';
+            const img = photoGlass.querySelector('img');
+            if(img) img.style.transform = `translateZ(40px) scale(1.04)`;
+          });
+        });
+        photoGlass.addEventListener('mouseleave', ()=>{
+          if(raf) cancelAnimationFrame(raf);
+          photoGlass.style.transform = '';
+          photoGlass.style.boxShadow = '';
+          const img = photoGlass.querySelector('img');
+          if(img) img.style.transform = '';
+        });
+      }
+
+      // Project cards tilt on mouse — throttled and softer
+      $$('.project').forEach(card=>{
+        let raf = null;
+        const rxMax = 4, ryMax = 6;
+        card.addEventListener('mousemove', e=>{
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          if(raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(()=>{
+            const rx = (y - 0.5) * rxMax;
+            const ry = (x - 0.5) * -ryMax;
+            card.style.transform = `translateY(-8px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+          });
+        });
+        card.addEventListener('mouseleave', ()=> {
+          if(raf) cancelAnimationFrame(raf);
+          card.style.transform = '';
+        });
+      });
+
+      // Image fallback logic
+      window.addEventListener('load', ()=>{
+        const img = document.getElementById('heroPhoto');
+        const fallback = document.getElementById('photoFallback');
+        if(img && img.complete && img.naturalWidth>0){
+          fallback.style.display='none';
+        } else {
+          if(img) img.style.display='none';
+          fallback.style.display='block';
+        }
+      });
+
+      // subtle particle dots (canvas)
+      (function createParticles(){
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.style.position='fixed';
+        canvas.style.inset='0';
+        canvas.style.zIndex=5;
+        canvas.style.pointerEvents='none';
+        canvas.style.opacity='0.05';
+        document.body.appendChild(canvas);
+        let w, h, particles;
+        function init(){ w = canvas.width = innerWidth; h = canvas.height = innerHeight; particles = Array.from({length: Math.max(50, Math.round(w*h/18000))}).map(()=>{
+          return { x: Math.random()*w, y: Math.random()*h, r: Math.random()*1.6+0.6, vx:(Math.random()-0.5)*0.18, vy:(Math.random()-0.5)*0.18 };
+        }); }
+        function draw(){
+          ctx.clearRect(0,0,w,h);
+          particles.forEach(p=>{
+            p.x += p.vx; p.y += p.vy;
+            if(p.x<0) p.x = w;
+            if(p.x>w) p.x = 0;
+            if(p.y<0) p.y = h;
+            if(p.y>h) p.y = 0;
+            ctx.beginPath();
+            ctx.fillStyle = 'rgba(200,230,255,0.18)';
+            ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+            ctx.fill();
+          });
+          requestAnimationFrame(draw);
+        }
+        init(); draw();
+        addEventListener('resize', init);
+      })();
+
+      // Log ready
+      console.log('MahakTech portfolio — comfy UI loaded. PROJECTS & contactForm available for interactions.');
+    })();
+
+    (function(){
+      // small sparkle on click to make UI feel reactive
+      function spawnSpark(x,y){
+        const el = document.createElement('div');
+        el.className = 'spark';
+        const hue = Math.round(180 + Math.random()*140);
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+        el.style.background = `radial-gradient(circle at 35% 30%, rgba(255,255,255,.94), hsla(${hue},100%,60%,.9) 40%, transparent 60%)`;
+        document.body.appendChild(el);
+        setTimeout(()=> el.remove(), 1100);
+      }
+
+      // spawn on clicks of hero CTAs and project buttons
+      ['hireBtn','viewProjects'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.addEventListener('click', (e)=>{
+          spawnSpark(e.clientX, e.clientY);
+        });
+      });
+      document.querySelectorAll('.view-case, .link-btn').forEach(btn=>{
+        btn.addEventListener('click', (e)=> spawnSpark(e.clientX, e.clientY));
+      });
+
+      // dynamic stagger for .enter elements using css variable
+      document.querySelectorAll('.enter').forEach((el,i)=>{
+        el.style.setProperty('--d', (i*80)+'ms');
+      });
+
+      // tiny floating delay randomizer for badges (adds uniqueness)
+      document.querySelectorAll('.badge').forEach((b,i)=>{
+        const dur = 3 + Math.random()*2;
+        b.style.animationDuration = dur + 's';
+        b.style.opacity = 0.98;
+      });
+    })();
+  </script>
+</body>
+</html>
