@@ -488,7 +488,7 @@
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
-      <a href="linkedin.com/in/mahak-saxena-658556385" class="cta">Linkedin</a>
+      <a href="https://linkedin.com/in/mahak-saxena-658556385" class="cta" target="_blank" rel="noopener">Linkedin</a>
     </div>
   </nav>
 
@@ -703,8 +703,6 @@
           <p class="small">I respond quickly. For client work, please share a short brief and timeline.</p>
 
           <div style="margin-top:12px">
-          
-            
             <div style="font-weight:700;margin-top:8px">Email</div>
             <div class="contact-line"><a href="mailto:saxenamahak612@gmail.com">saxenamahak612@gmail.com</a></div>
             <div style="margin-top:10px;color:var(--muted);font-size:13px">Location: Indore, India</div>
@@ -719,7 +717,7 @@
             <textarea required id="message" placeholder="Short brief / message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
             <button type="submit" class="btn-primary">Send Message</button>
           </form>
-         
+        </div>
       </div>
     </section>
 
@@ -748,35 +746,45 @@
     // Tiny utilities and interactions for enhanced UI
     (function(){
       // Smooth scroll to projects (keeps spark)
-      $('#viewProjects').addEventListener('click', e=>{
-        e.preventDefault();
-        document.getElementById('projects').scrollIntoView({behavior:'smooth', block:'start'});
-      });
+      const viewProjectsBtn = $('#viewProjects');
+      if(viewProjectsBtn){
+        viewProjectsBtn.addEventListener('click', e=>{
+          e.preventDefault();
+          document.getElementById('projects').scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      }
 
       // Hire button scrolls to contact and pulses the form briefly
-      $('#hireBtn').addEventListener('click', ()=>{
-        document.getElementById('contact').scrollIntoView({behavior:'smooth', block:'start'});
-        setTimeout(()=> {
-          const name = document.getElementById('name');
-          name.focus();
-          try {
-            name.animate([{ boxShadow: '0 0 0 rgba(0,0,0,0)' }, { boxShadow: '0 10px 34px rgba(0,208,255,0.08)' }], { duration:850, easing:'ease-out' });
-          } catch(e){}
-        }, 420);
-      });
+      const hireBtn = $('#hireBtn');
+      if(hireBtn){
+        hireBtn.addEventListener('click', ()=>{
+          document.getElementById('contact').scrollIntoView({behavior:'smooth', block:'start'});
+          setTimeout(()=> {
+            const name = document.getElementById('name');
+            if(name){
+              name.focus();
+              try {
+                name.animate([{ boxShadow: '0 0 0 rgba(0,0,0,0)' }, { boxShadow: '0 10px 34px rgba(0,208,255,0.08)' }], { duration:850, easing:'ease-out' });
+              } catch(e){}
+            }
+          }, 420);
+        });
+      }
 
       // Keep original contact handler (mailto)
       const contactForm = document.getElementById('contactForm');
-      contactForm.addEventListener('submit', function(e){
-        e.preventDefault();
-        const name = $('#name').value.trim();
-        const email = $('#email').value.trim();
-        const message = $('#message').value.trim();
-        if(!name||!email||!message){ alert('Please fill all fields'); return; }
-        const subject = encodeURIComponent('Portfolio inquiry from ' + name);
-        const body = encodeURIComponent('Name: ' + name + "\\nEmail: " + email + "\\n\\nMessage:\\n" + message);
-        window.location.href = 'mailto:saxenamahak612@gmail.com?subject=' + subject + '&body=' + body;
-      });
+      if(contactForm){
+        contactForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const name = $('#name').value.trim();
+          const email = $('#email').value.trim();
+          const message = $('#message').value.trim();
+          if(!name||!email||!message){ alert('Please fill all fields'); return; }
+          const subject = encodeURIComponent('Portfolio inquiry from ' + name);
+          const body = encodeURIComponent('Name: ' + name + "\\nEmail: " + email + "\\n\\nMessage:\\n" + message);
+          window.location.href = 'mailto:saxenamahak612@gmail.com?subject=' + subject + '&body=' + body;
+        });
+      }
 
       // Projects data store (used by modal view) — same symbol: PROJECTS
       const PROJECTS = {
@@ -832,22 +840,25 @@
       // close modal on ESC
       document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
 
-      // Resume modal
-      document.getElementById('download-resume').addEventListener('click', function(e){
-        e.preventDefault();
-        const resumePath = './Mahak-Saxena.pdf';
-        $('#modalTitle').textContent = 'Mahak Saxena — Resume';
-        $('#modalBody').innerHTML = '<div style="color:var(--muted);margin-bottom:12px">Preview (if the PDF is in the same folder, it will display here). Use the download link below to save.</div>';
-        $('#modalTech').innerHTML = '<div style="margin-top:8px"><a href="'+resumePath+'" download style="color:var(--accent1);font-weight:700">Download Resume (PDF)</a></div>';
-        const iframeWrapper = document.createElement('div');
-        iframeWrapper.className = 'resume-frame';
-        // avoid loading iframe until modal is shown for perf
-        iframeWrapper.innerHTML = '<iframe src="'+resumePath+'" style="width:100%;height:100%;border:0;" title="Resume"></iframe>';
-        $('#modalBody').appendChild(iframeWrapper);
-        $('#modalFoot').innerHTML = '';
-        $('#modal').classList.add('show');
-        setTimeout(()=> $('#modalClose').focus(), 150);
-      });
+      // Resume modal — guard for missing element
+      const downloadResumeBtn = document.getElementById('download-resume');
+      if(downloadResumeBtn){
+        downloadResumeBtn.addEventListener('click', function(e){
+          e.preventDefault();
+          const resumePath = './Mahak-Saxena.pdf';
+          $('#modalTitle').textContent = 'Mahak Saxena — Resume';
+          $('#modalBody').innerHTML = '<div style="color:var(--muted);margin-bottom:12px">Preview (if the PDF is in the same folder, it will display here). Use the download link below to save.</div>';
+          $('#modalTech').innerHTML = '<div style="margin-top:8px"><a href="'+resumePath+'" download style="color:var(--accent1);font-weight:700">Download Resume (PDF)</a></div>';
+          const iframeWrapper = document.createElement('div');
+          iframeWrapper.className = 'resume-frame';
+          // avoid loading iframe until modal is shown for perf
+          iframeWrapper.innerHTML = '<iframe src="'+resumePath+'" style="width:100%;height:100%;border:0;" title="Resume"></iframe>';
+          $('#modalBody').appendChild(iframeWrapper);
+          $('#modalFoot').innerHTML = '';
+          $('#modal').classList.add('show');
+          setTimeout(()=> $('#modalClose').focus(), 150);
+        });
+      }
 
       // Intersection observer for entrance animations (stagger)
       const observer = new IntersectionObserver((entries)=>{
