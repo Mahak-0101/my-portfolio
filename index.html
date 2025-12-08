@@ -466,10 +466,27 @@
       }
       html{scroll-behavior:auto}
     }
+     <canvas id="cyberGlobeBg"
+  style="
+    position:fixed;
+    top:0;left:0;width:100vw;height:100vh;
+    pointer-events:none;
+    z-index:0;
+    opacity:0.22;
+  "
+  aria-hidden="true"></canvas>
   </style>
 </head>
 <body>
+ 
+<!-- CYBER GLOBE BACKGROUND -->
+  <canvas id="cyberGlobeBg"
+    style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.22;"
+    aria-hidden="true"></canvas>
 
+  <!-- decorative animated blobs -->
+  <div class="bg-blob b1" aria-hidden></div>
+  <div class="bg-blob b2" aria-hidden></div>
   <!-- decorative animated blobs -->
   <div class="bg-blob b1" aria-hidden></div>
   <div class="bg-blob b2" aria-hidden></div>
@@ -736,9 +753,141 @@
       <div id="modalFoot" style="margin-top:16px"></div>
     </div>
   </div>
+  <script>
+(function() {
+  const canvas = document.getElementById('cyberGlobeBg');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+
+  function drawGlobe(rotation) {
+    ctx.clearRect(0, 0, w, h);
+    const r = Math.min(w, h)*0.32;
+    const cx = w/2, cy = h/2.1;
+
+    // Glow back
+    ctx.save();
+    ctx.globalAlpha = 0.55;
+    let grad = ctx.createRadialGradient(cx, cy, r*0.2, cx, cy, r*1.15);
+    grad.addColorStop(0,"rgba(124,77,255,0.13)");
+    grad.addColorStop(0.3,"rgba(0,208,255,0.11)");
+    grad.addColorStop(1,"rgba(0,0,16,0)");
+    ctx.beginPath();
+    ctx.arc(cx, cy, r*1.05, 0, Math.PI*2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.restore();
+
+    // Globe main sphere
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(8,18,32,0.56)';
+    ctx.shadowColor = 'rgba(0,208,255,0.16)';
+    ctx.shadowBlur = 28;
+    ctx.fill();
+    ctx.restore();
+
+    // Latitude lines
+    ctx.save();
+    ctx.strokeStyle = "rgba(124,217,255,0.19)";
+    ctx.lineWidth = 1.2;
+    for(let lat=1; lat<7; ++lat) {
+      ctx.beginPath();
+      let latR = r*Math.sin(Math.PI*lat/14);
+      ctx.ellipse(cx, cy, r, latR, 0, 0, Math.PI*2);
+      ctx.globalAlpha = 0.72 - lat*0.08;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Rotating longitude lines
+    ctx.save();
+    ctx.strokeStyle = "rgba(124,77,255,0.14)";
+    ctx.lineWidth = 1.15;
+    for(let p=0;p<14;p++){
+      ctx.beginPath();
+      let angle = rotation + p*(Math.PI*2/14);
+      for(let i=-r;i<=r;i+=3){
+        let x = cx + Math.cos(angle)*Math.sqrt(r*r-i*i);
+        let y = cy + i;
+        if(i===-r) ctx.moveTo(x,y);
+        else ctx.lineTo(x,y);
+      }
+      ctx.globalAlpha = 0.65;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Cyber dots
+    for(let i=0; i<=30; ++i){
+      let lat = Math.PI * (i/30 - 0.5) * 0.8;
+      let lon = rotation + Math.PI*2*(i/30);
+      let x = cx + r * Math.cos(lat) * Math.cos(lon);
+      let y = cy + r * Math.sin(lat);
+      ctx.save();
+      ctx.globalAlpha = 0.44;
+      ctx.beginPath();
+      ctx.arc(x, y, 2.1, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,208,255,0.58)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Scanlines for more cyber feel
+    ctx.save();
+    ctx.globalAlpha = 0.07;
+    for(let j=0; j<h; j+=22){
+      ctx.beginPath();
+      ctx.moveTo(0,j);
+      ctx.lineTo(w,j);
+      ctx.strokeStyle = "rgba(255,255,255,0.13)";
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Blinking cyber nodes
+    for(let i=0; i<7; ++i){
+      const blink = 0.5 + 0.5*Math.sin(rotation*2 + i*2.6);
+      if(blink < 0.68) continue;
+      let lat = Math.PI*((i+1.5)/9-0.5);
+      let lon = rotation + Math.PI*2*(i/7);
+      let x = cx + r * Math.cos(lat) * Math.cos(lon);
+      let y = cy + r * Math.sin(lat);
+      ctx.save();
+      ctx.globalAlpha=blink*0.18;
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, Math.PI*2);
+      ctx.fillStyle="rgba(124,77,255,0.8)";
+      ctx.shadowColor="rgba(0,208,255,0.82)";
+      ctx.shadowBlur=14;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // Animate
+  let rotation = 0;
+  function animate() {
+    rotation += 0.008;
+    drawGlobe(rotation);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
 
   <!-- ===== INTERNAL SCRIPTS ===== -->
   <script>
+    
     // Helpers
     const $ = s => document.querySelector(s);
     const $$ = s => Array.from(document.querySelectorAll(s));
