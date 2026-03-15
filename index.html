@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mahak Saxena — Founder & Developer | MahakTech</title>
+  
   <!-- ===== INTERNAL STYLES ===== -->
   <style>
     /* ---------- Theme variables ---------- */
@@ -456,7 +457,15 @@
       .photo-glass{ height:180px }
       .hero{ padding:80px 14px 30px }
     }
-
+#three-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+pointer-events:none;
+}
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .bg-blob, .logo::after, .kicker::after, .project-thumb, .project-thumb::before,
@@ -476,9 +485,10 @@
   "
   aria-hidden="true"></canvas>
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
- 
+ <div id="three-bg"></div>
 <!-- CYBER GLOBE BACKGROUND -->
   <canvas id="cyberGlobeBg"
     style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:0.30;"
@@ -1169,5 +1179,70 @@
       });
     })();
   </script>
+  <script>
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth / window.innerHeight,
+0.1,
+1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+alpha:true,
+antialias:true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+document.getElementById("three-bg").appendChild(renderer.domElement);
+
+
+const geometry = new THREE.IcosahedronGeometry(2,1);
+
+const material = new THREE.MeshStandardMaterial({
+color:0x00d0ff,
+metalness:0.7,
+roughness:0.2,
+wireframe:true
+});
+
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
+
+
+const light = new THREE.PointLight(0xffffff,1);
+light.position.set(10,10,10);
+scene.add(light);
+
+
+camera.position.z = 6;
+
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+sphere.rotation.x += 0.002;
+sphere.rotation.y += 0.004;
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+
+window.addEventListener("resize", ()=>{
+
+camera.aspect = window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+});
+
+</script>
 </body>
 </html>
