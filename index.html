@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +11,10 @@
 
 <style>
 
+*{
+box-sizing:border-box;
+}
+
 body{
 margin:0;
 font-family:Inter,system-ui,Arial;
@@ -20,7 +23,33 @@ color:white;
 overflow-x:hidden;
 }
 
-/* 3D Background */
+/* glowing background */
+
+body::before{
+content:"";
+position:fixed;
+width:700px;
+height:700px;
+background:radial-gradient(circle,#7c4dff55,transparent);
+top:-250px;
+left:-250px;
+filter:blur(120px);
+z-index:-2;
+}
+
+body::after{
+content:"";
+position:fixed;
+width:700px;
+height:700px;
+background:radial-gradient(circle,#00d0ff55,transparent);
+bottom:-250px;
+right:-250px;
+filter:blur(120px);
+z-index:-2;
+}
+
+/* 3D background */
 
 #three-bg{
 position:fixed;
@@ -31,7 +60,7 @@ height:100%;
 z-index:-1;
 }
 
-/* Navbar */
+/* navbar */
 
 nav{
 position:fixed;
@@ -40,22 +69,38 @@ left:50%;
 transform:translateX(-50%);
 width:90%;
 max-width:1100px;
+
 display:flex;
 justify-content:space-between;
-padding:14px 20px;
+align-items:center;
+
+padding:14px 22px;
+
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border-radius:20px;
+border:1px solid rgba(255,255,255,0.1);
+
+border-radius:30px;
+
+backdrop-filter:blur(20px);
+
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+
+z-index:100;
 }
 
 nav a{
 text-decoration:none;
 color:white;
-margin-left:15px;
+margin-left:20px;
 font-weight:600;
+transition:0.3s;
 }
 
-/* Hero */
+nav a:hover{
+color:#7c4dff;
+}
+
+/* layout */
 
 .container{
 width:90%;
@@ -63,74 +108,110 @@ max-width:1100px;
 margin:auto;
 }
 
+/* hero */
+
 .hero{
-height:90vh;
+height:100vh;
 display:flex;
 align-items:center;
 }
 
 .title{
-font-size:60px;
+font-size:65px;
 font-weight:800;
 
 background:linear-gradient(90deg,#00d0ff,#7c4dff);
+
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
 .subtitle{
-opacity:0.7;
+opacity:0.8;
 margin-top:10px;
 max-width:600px;
 }
 
-/* Buttons */
+/* button */
 
 .btn{
-margin-top:20px;
-padding:12px 20px;
+margin-top:30px;
+padding:14px 26px;
+border-radius:12px;
 border:none;
-border-radius:10px;
+
 background:linear-gradient(90deg,#00d0ff,#7c4dff);
-color:black;
+
 font-weight:700;
+
 cursor:pointer;
+
+transition:0.4s;
+
+box-shadow:0 10px 30px rgba(124,77,255,0.5);
 }
 
-/* Sections */
+.btn:hover{
+transform:translateY(-4px) scale(1.05);
+box-shadow:0 20px 60px rgba(124,77,255,0.8);
+}
+
+/* sections */
 
 section{
-margin-top:80px;
+margin-top:100px;
 }
 
 .card{
 background:rgba(255,255,255,0.04);
-padding:25px;
-border-radius:14px;
+
+border:1px solid rgba(255,255,255,0.08);
+
+padding:30px;
+
+border-radius:18px;
+
+backdrop-filter:blur(20px);
 }
 
-/* Projects */
+/* projects */
 
 .projects{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
+gap:25px;
+
 margin-top:30px;
 }
 
 .project{
 background:rgba(255,255,255,0.04);
-padding:20px;
-border-radius:12px;
-transition:transform .3s;
+
+border:1px solid rgba(255,255,255,0.08);
+
+padding:25px;
+
+border-radius:16px;
+
+transition:0.4s;
+
+backdrop-filter:blur(20px);
 }
 
 .project:hover{
-transform:translateY(-8px);
+
+transform:translateY(-10px) scale(1.03);
+
+box-shadow:
+0 20px 60px rgba(0,0,0,0.5),
+0 0 40px rgba(124,77,255,0.3);
+
+border-color:#7c4dff;
+
 }
 
 footer{
-margin-top:80px;
+margin-top:100px;
 text-align:center;
 opacity:0.6;
 }
@@ -234,7 +315,7 @@ My goal with MahakTech is to deliver real-world technology solutions.
 
 <script>
 
-/* THREE JS BACKGROUND */
+/* THREE JS */
 
 const scene = new THREE.Scene();
 
@@ -254,16 +335,22 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 
 document.getElementById("three-bg").appendChild(renderer.domElement);
 
+/* geometry */
+
 const geometry = new THREE.IcosahedronGeometry(2.5,1);
 
 const material = new THREE.MeshStandardMaterial({
 color:0x00d0ff,
-wireframe:true
+wireframe:true,
+emissive:0x0044ff,
+emissiveIntensity:0.6
 });
 
 const mesh = new THREE.Mesh(geometry,material);
 
 scene.add(mesh);
+
+/* lights */
 
 const light = new THREE.PointLight(0xffffff,1);
 
@@ -271,7 +358,15 @@ light.position.set(5,5,5);
 
 scene.add(light);
 
+const glowLight = new THREE.PointLight(0x7c4dff,2,20);
+
+glowLight.position.set(-5,-5,5);
+
+scene.add(glowLight);
+
 camera.position.z = 7;
+
+/* animation */
 
 function animate(){
 
@@ -287,6 +382,8 @@ renderer.render(scene,camera);
 
 animate();
 
+/* resize */
+
 window.addEventListener("resize",()=>{
 
 camera.aspect = window.innerWidth/window.innerHeight;
@@ -297,7 +394,7 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 
 });
 
-/* Mouse Interaction */
+/* mouse interaction */
 
 document.addEventListener("mousemove",(e)=>{
 
@@ -311,9 +408,57 @@ mesh.rotation.y=x*1.5;
 
 });
 
+/* particle stars */
+
+const canvas=document.createElement("canvas");
+
+document.body.appendChild(canvas);
+
+canvas.style.position="fixed";
+canvas.style.top="0";
+canvas.style.left="0";
+canvas.style.zIndex="-1";
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const particles=[];
+
+for(let i=0;i<120;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
+
+}
+
+function drawParticles(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+ctx.fillStyle="rgba(255,255,255,0.2)";
+
+ctx.fill();
+
+});
+
+requestAnimationFrame(drawParticles);
+
+}
+
+drawParticles();
+
 </script>
 
 </body>
-
 </html>
-```
