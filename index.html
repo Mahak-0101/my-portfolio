@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,13 +14,14 @@
 
 body{
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#060714;
+font-family:Inter,system-ui,Arial;
+background:#050510;
 color:white;
 overflow-x:hidden;
 }
 
 /* 3D Background */
+
 #three-bg{
 position:fixed;
 top:0;
@@ -29,13 +31,7 @@ height:100%;
 z-index:-1;
 }
 
-/* Layout */
-
-.container{
-width:90%;
-max-width:1100px;
-margin:auto;
-}
+/* Navbar */
 
 nav{
 position:fixed;
@@ -46,65 +42,95 @@ width:90%;
 max-width:1100px;
 display:flex;
 justify-content:space-between;
-padding:12px 20px;
+padding:14px 20px;
 background:rgba(255,255,255,0.05);
-border-radius:20px;
 backdrop-filter:blur(10px);
+border-radius:20px;
 }
 
 nav a{
-color:white;
 text-decoration:none;
+color:white;
 margin-left:15px;
-font-weight:bold;
+font-weight:600;
+}
+
+/* Hero */
+
+.container{
+width:90%;
+max-width:1100px;
+margin:auto;
 }
 
 .hero{
-min-height:90vh;
+height:90vh;
 display:flex;
 align-items:center;
-justify-content:space-between;
 }
 
-.hero h1{
-font-size:50px;
+.title{
+font-size:60px;
+font-weight:800;
+
 background:linear-gradient(90deg,#00d0ff,#7c4dff);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
 }
 
+.subtitle{
+opacity:0.7;
+margin-top:10px;
+max-width:600px;
+}
+
+/* Buttons */
+
 .btn{
+margin-top:20px;
 padding:12px 20px;
-background:linear-gradient(90deg,#00d0ff,#7c4dff);
 border:none;
 border-radius:10px;
+background:linear-gradient(90deg,#00d0ff,#7c4dff);
 color:black;
-font-weight:bold;
+font-weight:700;
 cursor:pointer;
+}
+
+/* Sections */
+
+section{
+margin-top:80px;
 }
 
 .card{
 background:rgba(255,255,255,0.04);
-padding:20px;
-border-radius:15px;
-margin-top:20px;
+padding:25px;
+border-radius:14px;
 }
+
+/* Projects */
 
 .projects{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
-margin-top:40px;
+margin-top:30px;
 }
 
 .project{
 background:rgba(255,255,255,0.04);
 padding:20px;
 border-radius:12px;
+transition:transform .3s;
+}
+
+.project:hover{
+transform:translateY(-8px);
 }
 
 footer{
-margin-top:60px;
+margin-top:80px;
 text-align:center;
 opacity:0.6;
 }
@@ -135,14 +161,14 @@ opacity:0.6;
 
 <div>
 
-<h1>Mahak Saxena</h1>
+<h1 class="title">Mahak Saxena</h1>
 
-<p>
-Founder & CEO of MahakTech.  
-Python Developer • IoT Engineer • Full-Stack Web Developer.
+<p class="subtitle">
+Founder of MahakTech.  
+Developer building web platforms, automation systems, and IoT solutions.
 </p>
 
-<button class="btn">Hire Me</button>
+<button class="btn">Work With Me</button>
 
 </div>
 
@@ -150,12 +176,12 @@ Python Developer • IoT Engineer • Full-Stack Web Developer.
 
 <section id="about" class="card">
 
-<h2>About Me</h2>
+<h2>About</h2>
 
 <p>
-I build practical technology solutions including websites, IoT systems,
-automation tools, and software applications.
-MahakTech focuses on real-world innovation for students and small businesses.
+I build practical software systems including web platforms,
+automation tools, and IoT devices.
+My goal with MahakTech is to deliver real-world technology solutions.
 </p>
 
 </section>
@@ -168,22 +194,22 @@ MahakTech focuses on real-world innovation for students and small businesses.
 
 <div class="project">
 <h3>Smart Home Automation</h3>
-<p>ESP32 IoT system with mobile control.</p>
+<p>ESP32 based IoT automation system.</p>
 </div>
 
 <div class="project">
-<h3>Student Portfolio Platform</h3>
-<p>Generate professional portfolios for students.</p>
+<h3>Portfolio Platform</h3>
+<p>Automatic portfolio generator for students.</p>
 </div>
 
 <div class="project">
 <h3>Assistive IoT Device</h3>
-<p>Low-cost emergency alert device.</p>
+<p>Low-cost alert device for families.</p>
 </div>
 
 <div class="project">
 <h3>Project Manager</h3>
-<p>Task manager for student teams.</p>
+<p>Task management system for teams.</p>
 </div>
 
 </div>
@@ -200,7 +226,7 @@ MahakTech focuses on real-world innovation for students and small businesses.
 
 <footer>
 
-© 2026 MahakTech — Mahak Saxena
+© 2026 MahakTech
 
 </footer>
 
@@ -208,7 +234,7 @@ MahakTech focuses on real-world innovation for students and small businesses.
 
 <script>
 
-/* THREE JS 3D BACKGROUND */
+/* THREE JS BACKGROUND */
 
 const scene = new THREE.Scene();
 
@@ -228,8 +254,6 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 
 document.getElementById("three-bg").appendChild(renderer.domElement);
 
-/* 3D object */
-
 const geometry = new THREE.IcosahedronGeometry(2.5,1);
 
 const material = new THREE.MeshStandardMaterial({
@@ -241,8 +265,6 @@ const mesh = new THREE.Mesh(geometry,material);
 
 scene.add(mesh);
 
-/* light */
-
 const light = new THREE.PointLight(0xffffff,1);
 
 light.position.set(5,5,5);
@@ -250,8 +272,6 @@ light.position.set(5,5,5);
 scene.add(light);
 
 camera.position.z = 7;
-
-/* animation */
 
 function animate(){
 
@@ -267,8 +287,6 @@ renderer.render(scene,camera);
 
 animate();
 
-/* resize */
-
 window.addEventListener("resize",()=>{
 
 camera.aspect = window.innerWidth/window.innerHeight;
@@ -279,7 +297,7 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 
 });
 
-/* mouse interaction */
+/* Mouse Interaction */
 
 document.addEventListener("mousemove",(e)=>{
 
@@ -298,3 +316,4 @@ mesh.rotation.y=x*1.5;
 </body>
 
 </html>
+```
