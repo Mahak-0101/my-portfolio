@@ -1,464 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mahak Saxena | MahakTech</title>
+<title>Mahak Saxena | Founder of MahakTech</title>
+
+<meta name="description" content="Mahak Saxena - Founder of MahakTech. Developer specializing in Web Development, IoT, and Automation Systems.">
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<style>
-
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-font-family:Inter,system-ui,Arial;
-background:#050510;
-color:white;
-overflow-x:hidden;
-}
-
-/* glowing background */
-
-body::before{
-content:"";
-position:fixed;
-width:700px;
-height:700px;
-background:radial-gradient(circle,#7c4dff55,transparent);
-top:-250px;
-left:-250px;
-filter:blur(120px);
-z-index:-2;
-}
-
-body::after{
-content:"";
-position:fixed;
-width:700px;
-height:700px;
-background:radial-gradient(circle,#00d0ff55,transparent);
-bottom:-250px;
-right:-250px;
-filter:blur(120px);
-z-index:-2;
-}
-
-/* 3D background */
-
-#three-bg{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-/* navbar */
-
-nav{
-position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
-width:90%;
-max-width:1100px;
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-padding:14px 22px;
-
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-
-border-radius:30px;
-
-backdrop-filter:blur(20px);
-
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
-
-z-index:100;
-}
-
-nav a{
-text-decoration:none;
-color:white;
-margin-left:20px;
-font-weight:600;
-transition:0.3s;
-}
-
-nav a:hover{
-color:#7c4dff;
-}
-
-/* layout */
-
-.container{
-width:90%;
-max-width:1100px;
-margin:auto;
-}
-
-/* hero */
-
-.hero{
-height:100vh;
-display:flex;
-align-items:center;
-}
-
-.title{
-font-size:65px;
-font-weight:800;
-
-background:linear-gradient(90deg,#00d0ff,#7c4dff);
-
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.subtitle{
-opacity:0.8;
-margin-top:10px;
-max-width:600px;
-}
-
-/* button */
-
-.btn{
-margin-top:30px;
-padding:14px 26px;
-border-radius:12px;
-border:none;
-
-background:linear-gradient(90deg,#00d0ff,#7c4dff);
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:0.4s;
-
-box-shadow:0 10px 30px rgba(124,77,255,0.5);
-}
-
-.btn:hover{
-transform:translateY(-4px) scale(1.05);
-box-shadow:0 20px 60px rgba(124,77,255,0.8);
-}
-
-/* sections */
-
-section{
-margin-top:100px;
-}
-
-.card{
-background:rgba(255,255,255,0.04);
-
-border:1px solid rgba(255,255,255,0.08);
-
-padding:30px;
-
-border-radius:18px;
-
-backdrop-filter:blur(20px);
-}
-
-/* projects */
-
-.projects{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
-
-margin-top:30px;
-}
-
-.project{
-background:rgba(255,255,255,0.04);
-
-border:1px solid rgba(255,255,255,0.08);
-
-padding:25px;
-
-border-radius:16px;
-
-transition:0.4s;
-
-backdrop-filter:blur(20px);
-}
-
-.project:hover{
-
-transform:translateY(-10px) scale(1.03);
-
-box-shadow:
-0 20px 60px rgba(0,0,0,0.5),
-0 0 40px rgba(124,77,255,0.3);
-
-border-color:#7c4dff;
-
-}
-
-footer{
-margin-top:100px;
-text-align:center;
-opacity:0.6;
-}
-
-</style>
-
 </head>
+
 
 <body>
 
+
+<!-- 3D BACKGROUND -->
+
 <div id="three-bg"></div>
 
-<nav>
 
-<div><b>MahakTech</b></div>
+<!-- NAVBAR -->
 
-<div>
-<a href="#about">About</a>
-<a href="#projects">Projects</a>
-<a href="#contact">Contact</a>
+<header>
+
+<nav class="navbar container">
+
+<div class="logo">
+MahakTech
 </div>
+
+<ul class="nav-links">
+
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#contact">Contact</a></li>
+
+</ul>
 
 </nav>
 
-<div class="container">
+</header>
 
-<section class="hero">
 
-<div>
 
-<h1 class="title">Mahak Saxena</h1>
+<!-- HERO SECTION -->
 
-<p class="subtitle">
-Founder of MahakTech.  
-Developer building web platforms, automation systems, and IoT solutions.
+<section id="home" class="hero container">
+
+<div class="hero-left">
+
+<h1 class="hero-title">
+
+Mahak Saxena
+
+</h1>
+
+<p class="hero-subtitle">
+
+Founder of <strong>MahakTech</strong>.  
+Developer building modern web platforms, automation systems and IoT solutions.
+
 </p>
 
-<button class="btn">Work With Me</button>
+<div class="hero-buttons">
+
+<a href="#projects" class="btn primary-btn">
+View Projects
+</a>
+
+<a href="#contact" class="btn secondary-btn">
+Hire Me
+</a>
+
+</div>
+
+</div>
+
+
+<div class="hero-right">
+
+<img src="assets/mahak.png" alt="Mahak Saxena">
 
 </div>
 
 </section>
 
-<section id="about" class="card">
 
-<h2>About</h2>
+
+<!-- ABOUT SECTION -->
+
+<section id="about" class="about container">
+
+<h2 class="section-title">
+About Me
+</h2>
+
+<p class="about-text">
+
+I am the founder of <strong>MahakTech</strong>, focused on building practical
+technology solutions including websites, automation systems,
+and IoT devices.
+
+My goal is to use technology to solve real-world problems for
+students, startups and businesses.
+
+</p>
+
+<div class="skills">
+
+<span>Python</span>
+<span>JavaScript</span>
+<span>React</span>
+<span>IoT</span>
+<span>ESP32</span>
+<span>Web Development</span>
+
+</div>
+
+</section>
+
+
+
+<!-- PROJECTS SECTION -->
+
+<section id="projects" class="projects container">
+
+<h2 class="section-title">
+Projects
+</h2>
+
+<div class="project-grid">
+
+
+<div class="project-card">
+
+<h3>Smart Home Automation</h3>
 
 <p>
-I build practical software systems including web platforms,
-automation tools, and IoT devices.
-My goal with MahakTech is to deliver real-world technology solutions.
+IoT based home automation system using ESP32 and mobile control.
 </p>
 
-</section>
-
-<section id="projects">
-
-<h2>Projects</h2>
-
-<div class="projects">
-
-<div class="project">
-<h3>Smart Home Automation</h3>
-<p>ESP32 based IoT automation system.</p>
 </div>
 
-<div class="project">
-<h3>Portfolio Platform</h3>
-<p>Automatic portfolio generator for students.</p>
+
+<div class="project-card">
+
+<h3>Student Portfolio Platform</h3>
+
+<p>
+A platform that generates professional portfolio websites for students.
+</p>
+
 </div>
 
-<div class="project">
+
+<div class="project-card">
+
 <h3>Assistive IoT Device</h3>
-<p>Low-cost alert device for families.</p>
+
+<p>
+Low cost device that sends emergency alerts to family members.
+</p>
+
 </div>
 
-<div class="project">
-<h3>Project Manager</h3>
-<p>Task management system for teams.</p>
+
+<div class="project-card">
+
+<h3>Project Management Tool</h3>
+
+<p>
+Lightweight project management tool for student teams.
+</p>
+
 </div>
+
 
 </div>
 
 </section>
 
-<section id="contact" class="card">
 
-<h2>Contact</h2>
 
-<p>Email: saxenamahak612@gmail.com</p>
+<!-- CONTACT SECTION -->
+
+<section id="contact" class="contact container">
+
+<h2 class="section-title">
+Contact
+</h2>
+
+<p>
+
+Interested in working together or building something amazing?
+
+</p>
+
+<a href="mailto:saxenamahak612@gmail.com" class="btn primary-btn">
+
+Send Email
+
+</a>
 
 </section>
 
-<footer>
 
-© 2026 MahakTech
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<p>
+
+© 2026 MahakTech | Built by Mahak Saxena
+
+</p>
 
 </footer>
 
-</div>
 
-<script>
 
-/* THREE JS */
+<!-- JAVASCRIPT -->
 
-const scene = new THREE.Scene();
-
-const camera = new THREE.PerspectiveCamera(
-60,
-window.innerWidth/window.innerHeight,
-0.1,
-1000
-);
-
-const renderer = new THREE.WebGLRenderer({
-alpha:true,
-antialias:true
-});
-
-renderer.setSize(window.innerWidth,window.innerHeight);
-
-document.getElementById("three-bg").appendChild(renderer.domElement);
-
-/* geometry */
-
-const geometry = new THREE.IcosahedronGeometry(2.5,1);
-
-const material = new THREE.MeshStandardMaterial({
-color:0x00d0ff,
-wireframe:true,
-emissive:0x0044ff,
-emissiveIntensity:0.6
-});
-
-const mesh = new THREE.Mesh(geometry,material);
-
-scene.add(mesh);
-
-/* lights */
-
-const light = new THREE.PointLight(0xffffff,1);
-
-light.position.set(5,5,5);
-
-scene.add(light);
-
-const glowLight = new THREE.PointLight(0x7c4dff,2,20);
-
-glowLight.position.set(-5,-5,5);
-
-scene.add(glowLight);
-
-camera.position.z = 7;
-
-/* animation */
-
-function animate(){
-
-requestAnimationFrame(animate);
-
-mesh.rotation.x += 0.002;
-
-mesh.rotation.y += 0.003;
-
-renderer.render(scene,camera);
-
-}
-
-animate();
-
-/* resize */
-
-window.addEventListener("resize",()=>{
-
-camera.aspect = window.innerWidth/window.innerHeight;
-
-camera.updateProjectionMatrix();
-
-renderer.setSize(window.innerWidth,window.innerHeight);
-
-});
-
-/* mouse interaction */
-
-document.addEventListener("mousemove",(e)=>{
-
-const x=(e.clientX/window.innerWidth)-0.5;
-
-const y=(e.clientY/window.innerHeight)-0.5;
-
-mesh.rotation.x=y*1.5;
-
-mesh.rotation.y=x*1.5;
-
-});
-
-/* particle stars */
-
-const canvas=document.createElement("canvas");
-
-document.body.appendChild(canvas);
-
-canvas.style.position="fixed";
-canvas.style.top="0";
-canvas.style.left="0";
-canvas.style.zIndex="-1";
-
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-const particles=[];
-
-for(let i=0;i<120;i++){
-
-particles.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-});
-
-}
-
-function drawParticles(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach(p=>{
-
-ctx.beginPath();
-
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-
-ctx.fillStyle="rgba(255,255,255,0.2)";
-
-ctx.fill();
-
-});
-
-requestAnimationFrame(drawParticles);
-
-}
-
-drawParticles();
-
-</script>
+<script src="script.js"></script>
 
 </body>
+
 </html>
